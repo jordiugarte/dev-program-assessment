@@ -49,7 +49,6 @@ namespace AssessmentTest
             IPagination<string> pagination = new PaginationString(COMMA_SAMPLE, 5, provider);
             pagination.LastPage();
             string [] expectedElements = {"z"};
-            pagination.PrintCurrentElements();
             CollectionAssert.AreEqual(expectedElements, pagination.GetVisibleItems().ToList());
         }
 
@@ -66,6 +65,12 @@ namespace AssessmentTest
         [TestMethod]
         public void TestLastPageWith10PageSize()
         {
+            IElementsProvider<string> provider = new StringProvider();
+            IPagination<string> pagination = new PaginationString(COMMA_SAMPLE, 10, provider);
+            pagination.LastPage();
+            string [] expectedElements = {"u", "v", "w", "x", "y", "z"};
+            pagination.PrintCurrentElements();
+            CollectionAssert.AreEqual(expectedElements, pagination.GetVisibleItems().ToList());
         }
 
         [TestMethod]

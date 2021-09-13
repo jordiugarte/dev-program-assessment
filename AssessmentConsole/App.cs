@@ -47,8 +47,24 @@ namespace AssessmentConsole
 
         private void NavigateData(string data, string option)
         {
+            string separator = "";
+            switch (option)
+            {
+                case "1":
+                    separator = ",";
+                    break;
+                case "2":
+                    separator = "|";
+                    break;
+                case "3":
+                    separator = " ";
+                    break;
+                default:
+                    separator = ",";
+                    break;
+            }
             string pageSize = GetOption("Type the Page size");
-            IElementsProvider<string> provider = new StringProvider();
+            IElementsProvider<string> provider = new StringProvider(separator);
             IPagination<string> pagination = new PaginationString(data, int.Parse(pageSize), provider);
             DoNavigation(pagination);
         }

@@ -6,19 +6,27 @@ namespace Assessment
     {
         private string separator = "";
 
+        public StringProvider(string separator)
+        {
+            this.separator = separator;
+        }
+
         public IEnumerable<string> ProcessData(string source)
         {
-            if (source.Contains(","))
+            if (separator == "")
             {
-                separator = ",";
-            }
-            else if (source.Contains("|"))
-            {
-                separator = "|";
-            }
-            else
-            {
-                separator = " ";
+                if (source.Contains(","))
+                {
+                    separator = ",";
+                }
+                else if (source.Contains("|"))
+                {
+                    separator = "|";
+                }
+                else
+                {
+                    separator = " ";
+                }
             }
             return source.Split(separator);
         }
