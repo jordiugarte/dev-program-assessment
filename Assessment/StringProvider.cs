@@ -6,6 +6,8 @@ namespace Assessment
     {
         private string separator = "";
 
+        public StringProvider(){}
+
         public StringProvider(string separator)
         {
             this.separator = separator;
