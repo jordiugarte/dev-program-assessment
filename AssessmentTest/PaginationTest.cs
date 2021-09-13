@@ -48,7 +48,8 @@ namespace AssessmentTest
             IElementsProvider<string> provider = new StringProvider();
             IPagination<string> pagination = new PaginationString(COMMA_SAMPLE, 5, provider);
             pagination.LastPage();
-            string [] expectedElements = {"v", "w", "x", "y", "z"};
+            string [] expectedElements = {"z"};
+            pagination.PrintCurrentElements();
             CollectionAssert.AreEqual(expectedElements, pagination.GetVisibleItems().ToList());
         }
 
@@ -84,10 +85,6 @@ namespace AssessmentTest
             IPagination<string> pagination = new PaginationString(PIPE_SAMPLE, 5, provider);
             pagination.FirstPage();
             string [] expectedElements = {"a", "b", "c", "d", "e"};
-            for(int i=0; i < pagination.GetVisibleItems().ToList().Count; i++)
-            {
-                Console.WriteLine(pagination.GetVisibleItems().ToList()[i]);
-            }
             CollectionAssert.AreEqual(expectedElements, pagination.GetVisibleItems().ToList());
         }
 

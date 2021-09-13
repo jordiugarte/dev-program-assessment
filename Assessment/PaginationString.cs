@@ -9,7 +9,6 @@ namespace Assessment
         private readonly IEnumerable<string> data;
         private readonly int pageSize;
         private int currentPage;
-        private bool inLastPage;
 
         public PaginationString(string source, int pageSize, IElementsProvider<string> provider)
         {
@@ -20,7 +19,6 @@ namespace Assessment
 
         public void FirstPage()
         {
-            inLastPage = false;
             currentPage = 1;
         }
 
@@ -28,19 +26,23 @@ namespace Assessment
         {
             if (page <= data.Count() / pageSize)
             {
-                inLastPage = false;
                 currentPage = page;
             }
             else
             {
-                throw new System.InvalidOperationException("Invalid page number.");
+                string message = "Invalid page number.";
+                throw new System.InvalidOperationException(message);
+                Console.Write(message);
             }
         }
 
         public void LastPage()
         {
-            inLastPage = true;
             currentPage = data.Count() / pageSize;
+            if (data.Count() % pageSize > 0)
+            {
+                currentPage++;
+            }
         }
 
         public void NextPage()
@@ -48,9 +50,12 @@ namespace Assessment
             if (currentPage <= pageSize)
             {
                 currentPage++;
+
             } else
             {
-                throw new System.InvalidOperationException();
+                string message = "Cannot go further last page.";
+                throw new System.InvalidOperationException(message);
+                Console.Write(message);
             }
         }
 
@@ -58,24 +63,18 @@ namespace Assessment
         {
             if (currentPage > 1)
             {
-                inLastPage = false;
                 currentPage--;
             } else
             {
-                throw new System.InvalidOperationException("Cannot go beyond first page.");
+                string message = "Cannot go beyond first page.";
+                throw new System.InvalidOperationException(message);
+                Console.Write(message);
             }
         }
 
         public IEnumerable<string> GetVisibleItems()
         {
-            if (inLastPage)
-            {
-                return data.Skip(data.Count() - pageSize).Take(pageSize);
-            }
-            else
-            {
-                return data.Skip((currentPage - 1) * pageSize).Take(pageSize);
-            }
+            return data.Skip((currentPage - 1) * pageSize).Take(pageSize);
         }
 
         public int CurrentPage()
@@ -86,6 +85,14 @@ namespace Assessment
         public int Pages()
         {
             return pageSize;
+        }
+
+        public void PrintCurrentElements()
+        {
+            for(int i=0; i < GetVisibleItems().ToList().Count; i++)
+            {
+                Console.WriteLine(GetVisibleItems().ToList()[i]);
+            }
         }
     }
 }

@@ -22,6 +22,9 @@ namespace Assessment
         /// when the page is not valid. Invalid values are: negative numbers, a value that exceeds the number of pages </summary>
         void GoToPage(int page);
 
+        //// <summary>Shows all current selected elements</summary>
+        void PrintCurrentElements();
+
         //// <summary>Returns the current page</summary>
         int CurrentPage();
 

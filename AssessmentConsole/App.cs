@@ -68,18 +68,37 @@ namespace AssessmentConsole
                 5. Go to page
                 0. Go Back
                 ");
-                if (option == "4") 
+                try
                 {
-                    pagination.LastPage();
-                } else if (option == "0")
+                    switch (option)
+                    {
+                        case "1":
+                            pagination.FirstPage();
+                            break;
+                        case "2":
+                            pagination.NextPage();
+                            break;
+                        case "3":
+                            pagination.PrevPage();
+                            break;
+                        case "4":
+                            pagination.LastPage();
+                            break;
+                        case "5":
+                            pagination.GoToPage(int.Parse(GetOption("Type number of page:")));
+                            break;
+                        default:
+                            exit = true;
+                            break;
+                    }
+                    pagination.PrintCurrentElements();
+                }
+                catch(System.InvalidOperationException e)
                 {
-                    exit = true;
+                    Console.WriteLine("Enter a valid option");
                 }
             }
-    
         }
-
-        
 
         private string GetOption(string message)
         {
