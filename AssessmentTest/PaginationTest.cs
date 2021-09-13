@@ -34,7 +34,12 @@ namespace AssessmentTest
         [TestMethod]
         public void TestPreviousPage()
         {
-            
+            IElementsProvider<string> provider = new StringProvider();
+            IPagination<string> pagination = new PaginationString(COMMA_SAMPLE, 5, provider);
+            pagination.GoToPage(3);
+            pagination.PrevPage();
+            string [] expectedElements = {"f", "g", "h", "i", "j"};
+            CollectionAssert.AreEqual(expectedElements, pagination.GetVisibleItems().ToList());
         }
 
         [TestMethod]
@@ -65,6 +70,11 @@ namespace AssessmentTest
         [TestMethod]
         public void TestGoToPageWith10PageSize()
         {
+            IElementsProvider<string> provider = new StringProvider();
+            IPagination<string> pagination = new PaginationString(COMMA_SAMPLE, 10, provider);
+            pagination.GoToPage(2);
+            string [] expectedElements = {"k", "l", "m", "n", "o", "p", "q", "r", "s", "t"};
+            CollectionAssert.AreEqual(expectedElements, pagination.GetVisibleItems().ToList());
         }
 
          [TestMethod]
@@ -74,14 +84,22 @@ namespace AssessmentTest
             IPagination<string> pagination = new PaginationString(PIPE_SAMPLE, 5, provider);
             pagination.FirstPage();
             string [] expectedElements = {"a", "b", "c", "d", "e"};
+            for(int i=0; i < pagination.GetVisibleItems().ToList().Count; i++)
+            {
+                Console.WriteLine(pagination.GetVisibleItems().ToList()[i]);
+            }
             CollectionAssert.AreEqual(expectedElements, pagination.GetVisibleItems().ToList());
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException), "Cannot go beyond first page.")]
         public void TestPreviousPageException()
         {
-
+            IElementsProvider<string> provider = new StringProvider();
+            IPagination<string> pagination = new PaginationString(COMMA_SAMPLE, 5, provider);
+            pagination.PrevPage();
         }
+
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException), "Invalid page number.")]
         public void TestGoToPageException()

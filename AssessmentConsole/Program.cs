@@ -17,6 +17,7 @@ namespace AssessmentConsole
                 );
                 Console.WriteLine(">");
                 string option = Console.ReadLine();
+                
                 exit = app.ProcessOption(option);
             }
         }

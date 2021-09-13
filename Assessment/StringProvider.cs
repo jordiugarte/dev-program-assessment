@@ -4,11 +4,22 @@ namespace Assessment
 {
     public class StringProvider : IElementsProvider<string>
     {
-        private readonly string separator = ",";
-
+        private string separator = "";
 
         public IEnumerable<string> ProcessData(string source)
         {
+            if (source.Contains(","))
+            {
+                separator = ",";
+            }
+            else if (source.Contains("|"))
+            {
+                separator = "|";
+            }
+            else
+            {
+                separator = " ";
+            }
             return source.Split(separator);
         }
     }
